@@ -1,6 +1,7 @@
 package com.week2.week2.domain.lecture
 
 import com.week2.week2.domain.lecture.dto.LectureEnrollServiceRequest
+import com.week2.week2.domain.member.MemberLectureRepository
 import com.week2.week2.domain.member.MemberRepository
 import com.week2.week2.infra.lecture.Lecture
 
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional
 class LectureService (
     private val lectureRepository: LectureRepository,
     private val memberRepository: MemberRepository,
+    private val memberLectureRepository: MemberLectureRepository,
 ){
 
     val logger = LoggerFactory.getLogger(LectureService::class.java)
@@ -21,18 +23,20 @@ class LectureService (
     fun enroll(
         request: LectureEnrollServiceRequest
     ): Lecture {
-        logger.info("arrived " +Thread.currentThread().id + " "  + System.nanoTime())
 
         val targetLecture = lectureRepository.findByIdWithSubjectAndTeacher(request.lectureId)
             ?: throw RuntimeException("Lecture with id ${request.lectureId} not found")
-        logger.info("getLecture " +Thread.currentThread().id + " "  + System.nanoTime())
+
 
         val requestMember = memberRepository.findById(request.userId)
             ?: throw RuntimeException("Member with id ${request.lectureId} not found")
 
+        if(memberLectureRepository.existsByLectureAndMember(requestMember, targetLecture)){
+            logger.warn("이미 유저가 신청한 강의입니다")
+            throw RuntimeException("이미 유저가 신청한 강의입니다")
+        }
         targetLecture.enrollMember(requestMember)
 
-        logger.info("end " +Thread.currentThread().id + " "  + System.nanoTime())
         return targetLecture
     }
 

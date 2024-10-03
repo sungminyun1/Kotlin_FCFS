@@ -24,6 +24,9 @@ class MemberLectureRepositoryImpl(
 
     override fun findAllByLecture(lecture: Lecture): List<MemberLecture> {
         return memberLectureJpaRepository.findAllByLecture(lecture)
+    }
 
+    override fun existsByLectureAndMember(member: Member, lecture: Lecture): Boolean {
+        return memberLectureJpaRepository.existsByLectureAndMember(lecture, member)
     }
 }

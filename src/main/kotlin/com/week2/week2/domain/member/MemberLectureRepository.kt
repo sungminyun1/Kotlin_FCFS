@@ -9,4 +9,5 @@ interface MemberLectureRepository {
     fun findById(id: Long): MemberLecture?
     fun findAllByMember(member: Member): List<MemberLecture>
     fun findAllByLecture(lecture: Lecture): List<MemberLecture>
+    fun existsByLectureAndMember(member: Member, lecture: Lecture): Boolean
 }

@@ -107,4 +107,47 @@ class LectureServiceIntegrateTest(
         //then
         assertThat(resultCount.size).isEqualTo(Lecture.MAX_CAPACITY)
     }
+
+    @Test
+    @DisplayName("유저는 이미 신청한 강의에 다시 신청할 수 없다.")
+    fun testEnrollDuplicateLecture() {
+        //given
+        val teacher = Member(name = "teacher")
+        memberRepository.save(teacher)
+        val student = Member(name = "student")
+        memberRepository.save(student)
+        val subject = Subject(name = "subject 1", teacher = teacher)
+        subjectJpaRepository.save(subject)
+        val lecture = Lecture(subject = subject, date = "241001", capacity = Lecture.MAX_CAPACITY)
+        lectureRepository.save(lecture)
+
+        val numberOfThreads = 5L
+        val startLatch = CountDownLatch(1)
+        val finishLatch = CountDownLatch(numberOfThreads.toInt())
+
+        repeat(numberOfThreads.toInt()){
+            executorService.submit {
+                try{
+                    startLatch.await()
+
+                    val request = LectureEnrollServiceRequest(student.id!!, lecture.id!!)
+                    val response = lectureService.enroll(request)
+
+                }finally {
+                    finishLatch.countDown()
+                }
+            }
+        }
+
+        startLatch.countDown()
+
+        executorService.shutdown()
+        executorService.awaitTermination(1, TimeUnit.MINUTES)
+
+        //when
+        val resultCount = memberLectureRepository.findAllByLecture(lecture)
+
+        //then
+        assertThat(resultCount.size).isEqualTo(1)
+    }
 }

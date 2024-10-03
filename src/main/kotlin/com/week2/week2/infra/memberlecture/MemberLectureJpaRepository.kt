@@ -12,4 +12,6 @@ interface MemberLectureJpaRepository: JpaRepository<MemberLecture, Long> {
     fun findAllByMember(member: Member): List<MemberLecture>
 
     fun findAllByLecture(lecture: Lecture): List<MemberLecture>
+
+    fun existsByLectureAndMember(lecture: Lecture, member: Member): Boolean
 }
