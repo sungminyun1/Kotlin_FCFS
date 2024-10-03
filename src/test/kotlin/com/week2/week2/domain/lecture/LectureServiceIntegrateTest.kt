@@ -87,7 +87,7 @@ class LectureServiceIntegrateTest(
                 try{
                     startLatch.await()
 
-                    val request = LectureEnrollServiceRequest(i, 1)
+                    val request = LectureEnrollServiceRequest(i, lecture.id!!)
                     val response = lectureService.enroll(request)
 
                 }finally {
