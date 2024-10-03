@@ -10,4 +10,8 @@ class LectureRepositoryImpl(
     override fun findByIdWithSubjectAndTeacher(id: Long): Lecture? {
         return jpaRepository.findByIdWithSubjectAndTeacher(id)
     }
+
+    override fun findAllByDateWithSubjectAndTeacher(date: String): List<Lecture> {
+        return jpaRepository.findAllByDateWithSubjectAndTeacher(date)
+    }
 }

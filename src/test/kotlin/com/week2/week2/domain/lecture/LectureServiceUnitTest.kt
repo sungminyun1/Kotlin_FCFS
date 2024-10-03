@@ -6,6 +6,7 @@ import com.week2.week2.infra.lecture.Lecture
 import com.week2.week2.infra.member.Member
 import com.week2.week2.infra.subject.Subject
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -52,5 +53,35 @@ class LectureServiceUnitTest(
         val result = lectureService.enroll(request)
 
         assertThat(result.capacity).isEqualTo(Lecture.MAX_CAPACITY - 1)
+    }
+
+    @Test
+    @DisplayName("잘못된 사용자 아이디로 신청하면 에러가 발생한다")
+    fun testEnrollLectureWithWrongUser() {
+        //given
+        val userId = 1L;
+        val lectureId = 1L;
+        val request = LectureEnrollServiceRequest(userId, lectureId)
+        `when`(memberRepository.findById(anyLong())).thenReturn(null)
+        `when`(lectureRepository.findByIdWithSubjectAndTeacher(anyLong())).thenReturn(lecture)
+
+        //when then
+        assertThatThrownBy { lectureService.enroll(request) }
+            .isInstanceOf(RuntimeException::class.java)
+    }
+
+    @Test
+    @DisplayName("잘못된 강의 아이디로 신청하면 에러가 발생한다")
+    fun testEnrollLectureWithWrongLecture() {
+        //given
+        val userId = 1L;
+        val lectureId = 1L;
+        val request = LectureEnrollServiceRequest(userId, lectureId)
+        `when`(memberRepository.findById(anyLong())).thenReturn(student)
+        `when`(lectureRepository.findByIdWithSubjectAndTeacher(anyLong())).thenReturn(null)
+
+        //when then
+        assertThatThrownBy { lectureService.enroll(request) }
+            .isInstanceOf(RuntimeException::class.java)
     }
 }

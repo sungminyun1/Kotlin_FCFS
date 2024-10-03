@@ -27,4 +27,7 @@ class LectureService (
         return targetLecture
     }
 
+    fun getLectureListByDate(date: String): List<Lecture> {
+        return lectureRepository.findAllByDateWithSubjectAndTeacher(date)
+    }
 }
