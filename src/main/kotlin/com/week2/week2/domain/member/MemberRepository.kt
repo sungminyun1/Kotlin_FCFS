@@ -1,4 +1,4 @@
-package com.week2.week2.domain.lecture
+package com.week2.week2.domain.member
 
 import com.week2.week2.infra.member.Member
 

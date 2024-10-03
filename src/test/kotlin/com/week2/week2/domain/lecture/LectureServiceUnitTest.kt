@@ -2,6 +2,7 @@ package com.week2.week2.domain.lecture
 
 import com.week2.week2.TestSupport
 import com.week2.week2.domain.lecture.dto.LectureEnrollServiceRequest
+import com.week2.week2.domain.member.MemberRepository
 import com.week2.week2.infra.lecture.Lecture
 import com.week2.week2.infra.member.Member
 import com.week2.week2.infra.subject.Subject

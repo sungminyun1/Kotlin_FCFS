@@ -1,6 +1,7 @@
 package com.week2.week2.domain.lecture
 
 import com.week2.week2.domain.lecture.dto.LectureEnrollServiceRequest
+import com.week2.week2.domain.member.MemberRepository
 import com.week2.week2.infra.lecture.Lecture
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
@@ -9,7 +10,6 @@ import org.springframework.stereotype.Service
 class LectureService (
     private val lectureRepository: LectureRepository,
     private val memberRepository: MemberRepository,
-    private val memberLectureRepository: MemberLectureRepository
 ){
 
     @Transactional
