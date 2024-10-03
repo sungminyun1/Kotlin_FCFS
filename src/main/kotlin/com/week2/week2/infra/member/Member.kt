@@ -1,4 +1,4 @@
-package com.week2.week2.domain.Member
+package com.week2.week2.infra.member
 
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue

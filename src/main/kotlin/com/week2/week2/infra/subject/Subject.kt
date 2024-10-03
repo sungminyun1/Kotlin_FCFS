@@ -1,10 +1,10 @@
-package com.week2.week2.domain.Lecture
+package com.week2.week2.infra.subject
 
-import com.week2.week2.domain.Member.Member
+import com.week2.week2.infra.member.Member
 import jakarta.persistence.*
 
 @Entity
-class Lecture (
+class Subject (
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long,
