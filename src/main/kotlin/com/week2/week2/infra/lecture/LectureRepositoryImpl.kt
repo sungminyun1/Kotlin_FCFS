@@ -14,4 +14,8 @@ class LectureRepositoryImpl(
     override fun findAllByDateWithSubjectAndTeacher(date: String): List<Lecture> {
         return jpaRepository.findAllByDateWithSubjectAndTeacher(date)
     }
+
+    override fun save(lecture: Lecture): Lecture {
+        return jpaRepository.save(lecture)
+    }
 }

@@ -3,7 +3,7 @@ package com.week2.week2.interfaces.api.lecture.dto
 import com.week2.week2.infra.lecture.Lecture
 
 data class LectureResponse(
-    val id: Long,
+    val id: Long?,
     val name: String,
     val teacher: String,
     val capacity: Int,

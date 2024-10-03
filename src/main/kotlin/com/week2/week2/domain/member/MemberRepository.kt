@@ -4,4 +4,5 @@ import com.week2.week2.infra.member.Member
 
 interface MemberRepository {
     fun findById(memberId: Long): Member?
+    fun save(member: Member): Member
 }

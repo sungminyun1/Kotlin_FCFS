@@ -1,5 +1,6 @@
 package com.week2.week2.infra.memberlecture
 
+import com.week2.week2.infra.lecture.Lecture
 import com.week2.week2.infra.member.Member
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
@@ -9,4 +10,6 @@ interface MemberLectureJpaRepository: JpaRepository<MemberLecture, Long> {
             "join fetch ml.lecture l  join fetch l.subject ls " +
             "join fetch ls.teacher where ml.member = :member")
     fun findAllByMember(member: Member): List<MemberLecture>
+
+    fun findAllByLecture(lecture: Lecture): List<MemberLecture>
 }
